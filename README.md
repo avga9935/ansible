@@ -5,8 +5,44 @@ Now make sure we can ssh to any machine from main machine.
 Now Install ansible on main machine using  “ sudo apt install ansible “.
 Now create an inventory file named as “ INVENTORY.INI “ we created this so we can enter the IP of the machines in which we want to make any changes we can add database IP as well.
 
+```
+[ec2]
+NAME1
+NAME2
+NAME3 
+
+
+
+```
+
 Once done now create a playbook for whatever we want to send command to every machine.
 Now create a file named as “ PLAYBOOK.YML “ in which we will put instructions/commands for othe machines.
+
+# Example playbook.yaml file
+
+```
+---
+- name: Example Playbook
+  hosts: ec2
+  become: yes
+  tasks:
+    - name: Update packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
+```
+
 
 Now run this playbook file using “ ansible-playbook -i inventory.ini myplaybook.yml “
 We will get output like this
