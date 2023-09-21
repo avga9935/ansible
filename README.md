@@ -11,7 +11,11 @@ Now Install ansible on main machine using  “ sudo apt install ansible “.
 Now create an inventory file named as “ INVENTORY.INI “ we created this so we can enter the IP of the machines in which we want to make any changes we can add database IP as well.
 
 Once done now create a playbook for whatever we want to send command to every machine.
+<<<<<<< HEAD
 Now create a file named as “ PLAYBOOK.YML “ in which we will put instructions/commands for othe machines.
+=======
+Now create a file named as “ PLAYBOOK.YML “ in which we will put instructions/commands for other machines.
+>>>>>>> 06b6e3fa425de78506fecccab8cb6b34f4611cab
 
 Now run this playbook file using “ ansible-playbook -i inventory.ini myplaybook.yml “
 We will get output like this
