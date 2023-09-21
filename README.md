@@ -1,67 +1,36 @@
 The very first step is to connect all machines with the main ubuntu machine, so the machine in which we are going to install the ansible can access to any of the instances without any issues.
+
 Now create keys in each and every machine using SSH-KEYGEN.
+
 Once created copy the ID_RSA.PUB from main machine and paste it on all of the machines under .SSH/authorized_keys.
+
 Now make sure we can ssh to any machine from main machine.
+
 Now Install ansible on main machine using  “ sudo apt install ansible “.
+
 Now create an inventory file named as “ INVENTORY.INI “ we created this so we can enter the IP of the machines in which we want to make any changes we can add database IP as well.
-
-```
-[ec2]
-NAME1
-NAME2
-NAME3 
-
-
-
-```
 
 Once done now create a playbook for whatever we want to send command to every machine.
 Now create a file named as “ PLAYBOOK.YML “ in which we will put instructions/commands for othe machines.
-
-# Example playbook.yaml file
-
-```
----
-- name: Example Playbook
-  hosts: ec2
-  become: yes
-  tasks:
-    - name: Update packages
-      apt:
-        update_cache: yes
-        upgrade: dist
-
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
-
-    - name: Start nginx
-      service:
-        name: nginx
-        state: started
-
-```
-
 
 Now run this playbook file using “ ansible-playbook -i inventory.ini myplaybook.yml “
 We will get output like this
 
 ```
-
 PLAY [Example Playbook] ********************************************************
 
 TASK [Gathering Facts] *********************************************************
-ok: [172.31.39.70]
+ok: [WEB1]
 
 TASK [Update packages] *********************************************************
-changed: [172.31.39.70]
+ok: [WEB1]
 
-TASK [Install Apache] **********************************************************
-changed: [172.31.39.70]
+TASK [Install nginx] ***********************************************************
+ok: [WEB1]
 
-TASK [Start Apache] ************************************************************
+TASK [Start nginx] *************************************************************
+ok: [WEB1]
 
 PLAY RECAP *********************************************************************
-
+WEB1                       : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
