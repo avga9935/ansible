@@ -11,7 +11,7 @@ Now create a file named as “ PLAYBOOK.YML “ in which we will put instruction
 Now run this playbook file using “ ansible-playbook -i inventory.ini myplaybook.yml “
 We will get output like this
 
-'''
+```
 
 PLAY [Example Playbook] ********************************************************
 
@@ -28,4 +28,4 @@ TASK [Start Apache] ************************************************************
 
 PLAY RECAP *********************************************************************
 
-'''
+```
