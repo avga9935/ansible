@@ -1,21 +1,44 @@
-The very first step is to connect all machines with the main ubuntu machine, so the machine in which we are going to install the ansible can access to any of the instances without any issues.
+# Ansible Automation README
+This README provides instructions on how to set up Ansible automation for managing remote machines.
 
-Now create keys in each and every machine using SSH-KEYGEN.
+## Introduction
+This project aims to simplify the process of managing remote machines using Ansible. Ansible is an open-source automation tool that allows you to configure and control multiple servers from a central location.
 
-Once created copy the ID_RSA.PUB from main machine and paste it on all of the machines under .SSH/authorized_keys.
+## Prerequisites
+Before you begin, ensure you have the following prerequisites in place:
 
-Now make sure we can ssh to any machine from main machine.
+- **Main Ubuntu Machine**: This is the central machine from which you will control other instances.
+- **Remote Machines**: Machines you want to manage using Ansible.
+- **SSH Keys**: Create SSH keys for secure access to remote machines.
 
-Now Install ansible on main machine using  " sudo apt install ansible ".
+## Getting Started
+Follow these steps to set up Ansible automation:
 
-Now create an inventory file named as “ INVENTORY.INI “ we created this so we can enter the IP of the machines in which we want to make any changes we can add database IP as well.
+### Connecting Machines
+Ensure all remote machines are connected to the main Ubuntu machine so that Ansible can access them without issues.
 
-Once done now create a playbook for whatever we want to send command to every machine.
+### SSH Key Setup
+Generate SSH keys on the main Ubuntu machine and copy the public key (`id_rsa.pub`) to the `~/.ssh/authorized_keys` file on each remote machine.
 
-Now create a file named as “ PLAYBOOK.YML “ in which we will put instructions/commands for othe machines.
+### Installing Ansible
+Install Ansible on the main Ubuntu machine using the following commands:
 
-Now run this playbook file using “ ansible-playbook -i inventory.ini myplaybook.yml “
-We will get output like this
+```bash
+sudo apt update
+sudo apt install ansible
+```
+## Creating an Inventory
+Create an inventory file (e.g., inventory.ini) to list the IP addresses or hostnames of the remote machines you want to manage with Ansible.
+
+## Creating a Playbook
+Create a playbook file (e.g., myplaybook.yml) where you specify the instructions or commands you want to run on remote machines.
+
+## Running the Playbook
+Execute your playbook using Ansible with the following command:
+ansible-playbook -i inventory.ini myplaybook.yml
+
+##Example Playbook
+Here is an example playbook (myplaybook.yml) and the expected output:
 
 ```
 PLAY [Example Playbook] ********************************************************
