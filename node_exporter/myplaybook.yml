@@ -1,19 +1,39 @@
----
-- name: Example Playbook
-  hosts: ec2
+- name: Install Node Exporter
+  hosts: target_machine  # Replace with the hostname or IP address of your target machine
   become: yes
+
   tasks:
-    - name: Update packages
-      apt:
-        update_cache: yes
-        upgrade: dist
+    - name: Download Node Exporter
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz"        
+        dest: "/root/node_exporter-1.6.1.linux-amd64.tar.gz"
+        mode: 0644
 
-    - name: Install nginx
-      apt:
-        name: nginx
-        state: present
+    - name: Extract Node Exporter
+      ansible.builtin.unarchive:
+        src: "/root/node_exporter-1.6.1.linux-amd64.tar.gz"
+        dest: "/root/"
+        remote_src: yes
 
-    - name: Start nginx
-      service:
-        name: nginx
-        state: started
+    - name: Rename Node Exporter Directory
+      ansible.builtin.command:
+        cmd: "mv /root/node_exporter-1.6.1.linux-amd64 /root/node_exporter"
+        creates: "/root/node_exporter"
+
+- name: Copy and render Node Exporter service file
+  hosts: target_machine
+  become: yes
+  vars:
+    node_exporter_listen_address: "172.31.39.70:9091"  # Customize this with your desired address
+  tasks:
+    - name: Copy Node Exporter service file template
+      template:
+        src: service.j2
+        dest: /etc/systemd/system/node_exporter.service
+      notify: Reload Node Exporter Service
+
+  handlers:
+    - name: Reload Node Exporter Service
+      systemd:
+        name: node_exporter
+        state: restarted

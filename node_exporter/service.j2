@@ -1,0 +1,11 @@
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=root
+ExecStart=/root/node_exporter/node_exporter --web.listen-address={{ node_exporter_listen_address }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
